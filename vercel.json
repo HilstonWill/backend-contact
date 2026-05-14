@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "functions": {
+    "api/contact.js": {
+      "runtime": "nodejs22.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/contact",
+      "dest": "/api/contact.js"
+    },
+    {
+      "src": "/api/health",
+      "dest": "/api/contact.js"
+    }
+  ]
+}

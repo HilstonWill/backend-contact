@@ -1,0 +1,91 @@
+{
+  "info": {
+    "_postman_id": "4b22d8de-6ce8-4ce9-8f78-9bf8f7f8a8b2",
+    "name": "backend-contact API",
+    "description": "Coleccion para probar el backend de contacto en local o produccion.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        },
+        "description": "Verifica que el backend este activo."
+      },
+      "response": []
+    },
+    {
+      "name": "Enviar Contacto",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Will\",\n  \"correo\": \"tu_correo@gmail.com\",\n  \"mensaje\": \"Prueba desde Postman\",\n  \"trap\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "contact"
+          ]
+        },
+        "description": "Envia un mensaje real por SMTP si las variables del backend estan correctas."
+      },
+      "response": []
+    },
+    {
+      "name": "Spam Honeypot (debe devolver ok true sin enviar)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Bot\",\n  \"correo\": \"bot@example.com\",\n  \"mensaje\": \"Spam test\",\n  \"trap\": \"filled-by-bot\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "contact"
+          ]
+        },
+        "description": "Prueba el honeypot anti-spam."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000"
+    }
+  ]
+}
