@@ -40,8 +40,8 @@ function ownerEmailHtml({ nombre, correo, mensaje, brandName, portfolioUrl }) {
     <div style="max-width:700px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(2,6,23,.35);">
       <div style="padding:20px 24px;background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#ffffff;">
         <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">Contacto Web</div>
-        <h2 style="margin:0;font-size:23px;line-height:1.3;">Nuevo lead desde ${brandName}</h2>
-        <p style="margin:8px 0 0 0;font-size:14px;opacity:.9;">Tienes una nueva oportunidad de contacto.</p>
+        <h2 style="margin:0;font-size:23px;line-height:1.3;">Nuevo mensaje recibido</h2>
+        <p style="margin:8px 0 0 0;font-size:14px;opacity:.9;">Se registro una nueva solicitud desde el formulario de contacto.</p>
       </div>
       <div style="padding:22px 24px;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
@@ -62,12 +62,9 @@ function ownerEmailHtml({ nombre, correo, mensaje, brandName, portfolioUrl }) {
           ${mensaje}
         </div>
         <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
-          <a href="mailto:${correo}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;">Responder ahora</a>
-          <a href="${portfolioUrl}" style="display:inline-block;background:#ffffff;color:#0f172a;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;border:1px solid #cbd5e1;">Ver portafolio</a>
+          <a href="mailto:${correo}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;">Abrir respuesta en correo</a>
+          <a href="${portfolioUrl}" style="display:inline-block;background:#ffffff;color:#0f172a;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;border:1px solid #cbd5e1;">Revisar sitio</a>
         </div>
-      </div>
-      <div style="padding:14px 24px;border-top:1px solid #e5e7eb;background:#f8fafc;font-size:12px;color:#64748b;">
-        Mensaje generado automaticamente por el formulario de contacto de ${brandName}.
       </div>
     </div>
   </div>
@@ -79,17 +76,14 @@ function autoReplyHtml({ nombre, brandName, portfolioUrl }) {
   <div style="background:#0b1020;padding:28px 12px;font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
     <div style="max-width:700px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(2,6,23,.35);">
       <div style="padding:20px 24px;background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#ffffff;">
-        <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">${brandName}</div>
-        <h2 style="margin:0;font-size:23px;line-height:1.3;">Gracias por tu mensaje</h2>
+        <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">Confirmacion de contacto</div>
+        <h2 style="margin:0;font-size:23px;line-height:1.3;">Mensaje recibido correctamente</h2>
       </div>
       <div style="padding:22px 24px;line-height:1.7;font-size:15px;">
         <p style="margin:0 0 12px 0;">Hola ${nombre},</p>
-        <p style="margin:0 0 12px 0;">Recibi tu mensaje correctamente en mi portafolio. Gracias por escribir.</p>
-        <p style="margin:0 0 14px 0;">Te respondere a este mismo correo lo antes posible para continuar la conversacion.</p>
-        <a href="${portfolioUrl}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;">Visitar portafolio</a>
-      </div>
-      <div style="padding:14px 24px;border-top:1px solid #e5e7eb;background:#f8fafc;font-size:12px;color:#64748b;">
-        Este es un mensaje automatico de confirmacion.
+        <p style="margin:0 0 12px 0;">Tu solicitud fue recibida con exito.</p>
+        <p style="margin:0 0 14px 0;">Te respondere por este mismo medio a la brevedad posible.</p>
+        <a href="${portfolioUrl}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;">Ver trabajos recientes</a>
       </div>
     </div>
   </div>
