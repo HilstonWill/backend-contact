@@ -171,7 +171,7 @@ app.post("/api/contact", async (req, res) => {
     const safeMensaje = escapeHtml(cleanMensaje).replace(/\n/g, "<br/>");
 
     await transporter.sendMail({
-      from: `"Portafolio Contacto" <${fromEmail}>`,
+      from: `"Hilston Developer" <${fromEmail}>`,
       to: toEmail,
       replyTo: cleanCorreo,
       subject: `Nuevo contacto: ${cleanNombre}`,
@@ -186,7 +186,7 @@ app.post("/api/contact", async (req, res) => {
 
     if (autoReplyEnabled) {
       await transporter.sendMail({
-        from: `"Portafolio Contacto" <${fromEmail}>`,
+        from: `"Hilston Developer" <${fromEmail}>`,
         to: cleanCorreo,
         subject: "Recibimos tu mensaje",
         text: `Hola ${cleanNombre}, recibimos tu mensaje correctamente. Te responderemos pronto.`,
