@@ -4,10 +4,19 @@ import nodemailer from "nodemailer";
 
 const app = express();
 
-const allowedOrigin = process.env.ALLOWED_ORIGIN || "*";
+const allowedOrigins = (process.env.ALLOWED_ORIGIN || "*")
+  .split(",")
+  .map((item) => item.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: allowedOrigin === "*" ? true : allowedOrigin,
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes("*")) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+    },
   })
 );
 app.use(express.json({ limit: "256kb" }));
