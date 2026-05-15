@@ -34,6 +34,46 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#39;");
 }
 
+function ownerEmailHtml({ nombre, correo, mensaje }) {
+  return `
+  <div style="background:#f3f6fb;padding:24px;font-family:Arial,sans-serif;color:#0f172a;">
+    <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+      <div style="padding:18px 22px;background:#0f172a;color:#ffffff;">
+        <h2 style="margin:0;font-size:20px;">Nuevo mensaje desde tu portafolio</h2>
+      </div>
+      <div style="padding:20px 22px;">
+        <p style="margin:0 0 14px 0;"><strong>Nombre:</strong> ${nombre}</p>
+        <p style="margin:0 0 14px 0;"><strong>Correo:</strong> <a href="mailto:${correo}">${correo}</a></p>
+        <p style="margin:0 0 8px 0;"><strong>Mensaje:</strong></p>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.5;">
+          ${mensaje}
+        </div>
+        <div style="margin-top:18px;">
+          <a href="mailto:${correo}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:8px;">Responder a este contacto</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
+function autoReplyHtml({ nombre }) {
+  return `
+  <div style="background:#f3f6fb;padding:24px;font-family:Arial,sans-serif;color:#0f172a;">
+    <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+      <div style="padding:18px 22px;background:#0f172a;color:#ffffff;">
+        <h2 style="margin:0;font-size:20px;">Gracias por escribir</h2>
+      </div>
+      <div style="padding:20px 22px;line-height:1.6;">
+        <p>Hola ${nombre},</p>
+        <p>Recibi tu mensaje correctamente. Te respondere lo antes posible.</p>
+        <p>Gracias por contactarme.</p>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
 app.get("/api/health", (_req, res) => {
   res.status(200).json({ ok: true, service: "backend-contact" });
 });
@@ -61,6 +101,7 @@ app.post("/api/contact", async (req, res) => {
     const smtpPass = process.env.SMTP_PASS;
     const toEmail = process.env.CONTACT_TO_EMAIL || smtpUser;
     const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser;
+    const autoReplyEnabled = String(process.env.AUTO_REPLY_ENABLED || "false") === "true";
 
     if (!smtpHost || !smtpUser || !smtpPass || !fromEmail || !toEmail) {
       return res.status(500).json({
@@ -92,14 +133,22 @@ app.post("/api/contact", async (req, res) => {
       replyTo: cleanCorreo,
       subject: `Nuevo contacto: ${cleanNombre}`,
       text: `Nombre: ${cleanNombre}\nCorreo: ${cleanCorreo}\n\nMensaje:\n${cleanMensaje}`,
-      html: `
-        <h2>Nuevo mensaje desde el formulario</h2>
-        <p><strong>Nombre:</strong> ${safeNombre}</p>
-        <p><strong>Correo:</strong> ${safeCorreo}</p>
-        <p><strong>Mensaje:</strong></p>
-        <p>${safeMensaje}</p>
-      `,
+      html: ownerEmailHtml({
+        nombre: safeNombre,
+        correo: safeCorreo,
+        mensaje: safeMensaje,
+      }),
     });
+
+    if (autoReplyEnabled) {
+      await transporter.sendMail({
+        from: `"Portafolio Contacto" <${fromEmail}>`,
+        to: cleanCorreo,
+        subject: "Recibimos tu mensaje",
+        text: `Hola ${cleanNombre}, recibimos tu mensaje correctamente. Te responderemos pronto.`,
+        html: autoReplyHtml({ nombre: safeNombre }),
+      });
+    }
 
     return res.status(200).json({
       ok: true,
