@@ -34,6 +34,13 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#39;");
 }
 
+function normalizeEmailAddress(value = "") {
+  const raw = String(value).trim();
+  const match = raw.match(/<([^>]+)>/);
+  const candidate = match ? match[1].trim() : raw;
+  return candidate;
+}
+
 const emailPattern =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='320' viewBox='0 0 1200 320'%3E%3Cg fill='none' stroke='%231d4ed8' stroke-opacity='.2' stroke-width='1'%3E%3Cpath d='M0 80h1200M0 160h1200M0 240h1200'/%3E%3Cpath d='M120 0v320M240 0v320M360 0v320M480 0v320M600 0v320M720 0v320M840 0v320M960 0v320M1080 0v320'/%3E%3C/g%3E%3Cg fill='%232563eb' fill-opacity='.2'%3E%3Ccircle cx='170' cy='90' r='6'/%3E%3Ccircle cx='410' cy='170' r='6'/%3E%3Ccircle cx='690' cy='120' r='6'/%3E%3Ccircle cx='980' cy='210' r='6'/%3E%3C/g%3E%3C/svg%3E";
 
@@ -142,7 +149,7 @@ app.post("/api/contact", async (req, res) => {
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
     const toEmail = process.env.CONTACT_TO_EMAIL || smtpUser;
-    const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser;
+    const fromEmail = normalizeEmailAddress(process.env.CONTACT_FROM_EMAIL || smtpUser);
     const autoReplyEnabled = String(process.env.AUTO_REPLY_ENABLED || "false") === "true";
     const portfolioUrl = process.env.PORTFOLIO_URL || "https://hilston-will.netlify.app";
 
@@ -171,7 +178,7 @@ app.post("/api/contact", async (req, res) => {
     const safeMensaje = escapeHtml(cleanMensaje).replace(/\n/g, "<br/>");
 
     await transporter.sendMail({
-      from: `"Hilston Developer" <${fromEmail}>`,
+      from: { name: "Hilston Developer", address: fromEmail },
       to: toEmail,
       replyTo: cleanCorreo,
       subject: `Nuevo contacto: ${cleanNombre}`,
@@ -186,7 +193,7 @@ app.post("/api/contact", async (req, res) => {
 
     if (autoReplyEnabled) {
       await transporter.sendMail({
-        from: `"Hilston Developer" <${fromEmail}>`,
+        from: { name: "Hilston Developer", address: fromEmail },
         to: cleanCorreo,
         subject: "Recibimos tu mensaje",
         text: `Hola ${cleanNombre}, recibimos tu mensaje correctamente. Te responderemos pronto.`,
