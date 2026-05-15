@@ -34,40 +34,62 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#39;");
 }
 
-function ownerEmailHtml({ nombre, correo, mensaje }) {
+function ownerEmailHtml({ nombre, correo, mensaje, brandName, portfolioUrl }) {
   return `
-  <div style="background:#f3f6fb;padding:24px;font-family:Arial,sans-serif;color:#0f172a;">
-    <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
-      <div style="padding:18px 22px;background:#0f172a;color:#ffffff;">
-        <h2 style="margin:0;font-size:20px;">Nuevo mensaje desde tu portafolio</h2>
+  <div style="background:#0b1020;padding:28px 12px;font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
+    <div style="max-width:700px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(2,6,23,.35);">
+      <div style="padding:20px 24px;background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#ffffff;">
+        <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">Contacto Web</div>
+        <h2 style="margin:0;font-size:23px;line-height:1.3;">Nuevo lead desde ${brandName}</h2>
+        <p style="margin:8px 0 0 0;font-size:14px;opacity:.9;">Tienes una nueva oportunidad de contacto.</p>
       </div>
-      <div style="padding:20px 22px;">
-        <p style="margin:0 0 14px 0;"><strong>Nombre:</strong> ${nombre}</p>
-        <p style="margin:0 0 14px 0;"><strong>Correo:</strong> <a href="mailto:${correo}">${correo}</a></p>
-        <p style="margin:0 0 8px 0;"><strong>Mensaje:</strong></p>
-        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.5;">
+      <div style="padding:22px 24px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+          <tr>
+            <td style="padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#f8fafc;font-size:14px;">
+              <div style="font-size:12px;color:#475569;margin-bottom:4px;">Nombre</div>
+              <strong>${nombre}</strong>
+            </td>
+            <td style="width:10px;"></td>
+            <td style="padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#f8fafc;font-size:14px;">
+              <div style="font-size:12px;color:#475569;margin-bottom:4px;">Correo</div>
+              <a href="mailto:${correo}" style="color:#1d4ed8;text-decoration:none;font-weight:600;">${correo}</a>
+            </td>
+          </tr>
+        </table>
+        <p style="margin:0 0 8px 0;font-size:13px;color:#475569;text-transform:uppercase;letter-spacing:.08em;">Mensaje</p>
+        <div style="background:#f8fafc;border:1px solid #dbe3ef;border-radius:12px;padding:14px;line-height:1.6;font-size:15px;">
           ${mensaje}
         </div>
-        <div style="margin-top:18px;">
-          <a href="mailto:${correo}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:8px;">Responder a este contacto</a>
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="mailto:${correo}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;">Responder ahora</a>
+          <a href="${portfolioUrl}" style="display:inline-block;background:#ffffff;color:#0f172a;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;border:1px solid #cbd5e1;">Ver portafolio</a>
         </div>
+      </div>
+      <div style="padding:14px 24px;border-top:1px solid #e5e7eb;background:#f8fafc;font-size:12px;color:#64748b;">
+        Mensaje generado automaticamente por el formulario de contacto de ${brandName}.
       </div>
     </div>
   </div>
   `;
 }
 
-function autoReplyHtml({ nombre }) {
+function autoReplyHtml({ nombre, brandName, portfolioUrl }) {
   return `
-  <div style="background:#f3f6fb;padding:24px;font-family:Arial,sans-serif;color:#0f172a;">
-    <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
-      <div style="padding:18px 22px;background:#0f172a;color:#ffffff;">
-        <h2 style="margin:0;font-size:20px;">Gracias por escribir</h2>
+  <div style="background:#0b1020;padding:28px 12px;font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
+    <div style="max-width:700px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(2,6,23,.35);">
+      <div style="padding:20px 24px;background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#ffffff;">
+        <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">${brandName}</div>
+        <h2 style="margin:0;font-size:23px;line-height:1.3;">Gracias por tu mensaje</h2>
       </div>
-      <div style="padding:20px 22px;line-height:1.6;">
-        <p>Hola ${nombre},</p>
-        <p>Recibi tu mensaje correctamente. Te respondere lo antes posible.</p>
-        <p>Gracias por contactarme.</p>
+      <div style="padding:22px 24px;line-height:1.7;font-size:15px;">
+        <p style="margin:0 0 12px 0;">Hola ${nombre},</p>
+        <p style="margin:0 0 12px 0;">Recibi tu mensaje correctamente en mi portafolio. Gracias por escribir.</p>
+        <p style="margin:0 0 14px 0;">Te respondere a este mismo correo lo antes posible para continuar la conversacion.</p>
+        <a href="${portfolioUrl}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;">Visitar portafolio</a>
+      </div>
+      <div style="padding:14px 24px;border-top:1px solid #e5e7eb;background:#f8fafc;font-size:12px;color:#64748b;">
+        Este es un mensaje automatico de confirmacion.
       </div>
     </div>
   </div>
@@ -102,6 +124,8 @@ app.post("/api/contact", async (req, res) => {
     const toEmail = process.env.CONTACT_TO_EMAIL || smtpUser;
     const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser;
     const autoReplyEnabled = String(process.env.AUTO_REPLY_ENABLED || "false") === "true";
+    const brandName = process.env.BRAND_NAME || "Hilston Will";
+    const portfolioUrl = process.env.PORTFOLIO_URL || "https://hilston-will.netlify.app";
 
     if (!smtpHost || !smtpUser || !smtpPass || !fromEmail || !toEmail) {
       return res.status(500).json({
@@ -137,6 +161,8 @@ app.post("/api/contact", async (req, res) => {
         nombre: safeNombre,
         correo: safeCorreo,
         mensaje: safeMensaje,
+        brandName: escapeHtml(brandName),
+        portfolioUrl: escapeHtml(portfolioUrl),
       }),
     });
 
@@ -146,7 +172,11 @@ app.post("/api/contact", async (req, res) => {
         to: cleanCorreo,
         subject: "Recibimos tu mensaje",
         text: `Hola ${cleanNombre}, recibimos tu mensaje correctamente. Te responderemos pronto.`,
-        html: autoReplyHtml({ nombre: safeNombre }),
+        html: autoReplyHtml({
+          nombre: safeNombre,
+          brandName: escapeHtml(brandName),
+          portfolioUrl: escapeHtml(portfolioUrl),
+        }),
       });
     }
 
