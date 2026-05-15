@@ -34,9 +34,27 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#39;");
 }
 
-function ownerEmailHtml({ nombre, correo, mensaje, brandName, portfolioUrl }) {
+const emailNeuralPattern =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='360' viewBox='0 0 1200 360'%3E%3Cg fill='none' stroke='%2360a5fa' stroke-opacity='.28' stroke-width='1.2'%3E%3Cpath d='M0 240 C180 140 300 320 470 220 C620 130 760 310 930 210 C1040 145 1130 190 1200 170'/%3E%3Cpath d='M0 170 C160 90 320 240 470 170 C620 100 780 240 920 170 C1040 110 1120 140 1200 120'/%3E%3Cpath d='M0 300 C170 220 310 360 470 300 C620 240 780 360 940 300 C1050 260 1130 280 1200 260'/%3E%3C/g%3E%3Cg fill='%2393c5fd' fill-opacity='.34'%3E%3Ccircle cx='120' cy='170' r='4'/%3E%3Ccircle cx='210' cy='196' r='3'/%3E%3Ccircle cx='320' cy='154' r='4'/%3E%3Ccircle cx='450' cy='206' r='4'/%3E%3Ccircle cx='560' cy='162' r='3'/%3E%3Ccircle cx='690' cy='220' r='4'/%3E%3Ccircle cx='810' cy='174' r='3'/%3E%3Ccircle cx='930' cy='226' r='4'/%3E%3Ccircle cx='1040' cy='180' r='3'/%3E%3C/g%3E%3C/svg%3E";
+
+function ownerEmailHtml({
+  nombre,
+  correo,
+  mensaje,
+  brandName,
+  portfolioUrl,
+}) {
   return `
   <div style="background:#0b1020;padding:28px 12px;font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
+    <div style="max-width:700px;margin:0 auto 12px auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.12);">
+      <div style="padding:24px;background:
+        linear-gradient(135deg, rgba(15,23,42,.88), rgba(29,78,216,.78)),
+        url('${emailNeuralPattern}') center/cover no-repeat;
+        color:#ffffff;">
+        <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">${brandName}</div>
+        <h1 style="margin:0;font-size:22px;line-height:1.3;">Panel de Contacto</h1>
+      </div>
+    </div>
     <div style="max-width:700px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(2,6,23,.35);">
       <div style="padding:20px 24px;background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#ffffff;">
         <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">Contacto Web</div>
@@ -74,6 +92,15 @@ function ownerEmailHtml({ nombre, correo, mensaje, brandName, portfolioUrl }) {
 function autoReplyHtml({ nombre, brandName, portfolioUrl }) {
   return `
   <div style="background:#0b1020;padding:28px 12px;font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
+    <div style="max-width:700px;margin:0 auto 12px auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.12);">
+      <div style="padding:24px;background:
+        linear-gradient(135deg, rgba(15,23,42,.88), rgba(29,78,216,.78)),
+        url('${emailNeuralPattern}') center/cover no-repeat;
+        color:#ffffff;">
+        <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">${brandName}</div>
+        <h1 style="margin:0;font-size:22px;line-height:1.3;">Contacto Confirmado</h1>
+      </div>
+    </div>
     <div style="max-width:700px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(2,6,23,.35);">
       <div style="padding:20px 24px;background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#ffffff;">
         <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-bottom:8px;">Confirmacion de contacto</div>
